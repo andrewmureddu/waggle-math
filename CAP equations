@@ -1,0 +1,44 @@
+# CAP LOOP EQUATIONS FOR HONEY BEE FORAGING
+
+1. CONSTRAINT EQUATIONS
+   C1. Distance Encoding:
+   waggle_duration = 0.004725 * distance_m
+   
+   C2. Forager Conservation:
+   N_available(t) + N_committed(t) ≤ 49
+   
+   C3. Dance Floor Limit:
+   max_dancers = 5
+1. ALIGNMENT EQUATIONS
+   A1. Recruitment Strength:
+   followers(t) = 4.842 * dancers * quality * exp(-0.408 * d/d_max)
+   
+   A2. Recruitment Rate:
+   μ = followers/dancers ≈ 2.038
+   
+   A3. Spatial Alignment:
+   κ = 1/σ²(angles) = 0.4046
+1. PERSISTENCE EQUATIONS
+   P1. Resource Extraction:
+   dR/dt = η * N_committed * quality - δ * R
+   
+   P2. Temporal Memory:
+   corr(N_committed(t), N_committed(t+1)) > 0.5
+   
+   P3. Quorum Threshold:
+   θ_quorum = 8 followers
+1. FEEDBACK (NEW CONSTRAINTS)
+   F1. Scout Limitation:
+   N_scouts(t+1) = 49 - N_committed(t)
+   
+   F2. Quality Depletion:
+   quality(t+1) = quality(t) * exp(-ε * harvest(t))
+
+COMPLETE SYSTEM:
+dN_committed/dt = α * A(t) * N_available(t) - γ * N_committed(t)
+dquality/dt = -ε * N_committed(t) * quality(t)
+dR/dt = η * N_committed(t) * quality(t) - δ * R(t)
+
+where:
+A(t) = recruitment alignment function
+N_available(t) = 49 - N_committed(t)
